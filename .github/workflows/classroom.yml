@@ -1,0 +1,32 @@
+name: GitHub Classroom Autograding
+on: [push]
+
+permissions:
+  checks: write
+  actions: read
+  contents: read
+
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout código do aluno
+        uses: actions/checkout@v4
+
+      - name: Configurar o Node.js Estável (v20)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Instalar Dependências (Ignorando Peer Conflicts)
+        run: npm install --legacy-peer-deps
+
+      - name: Executar Bateria de Testes das Sprints
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: "Testes de Componentes e Regras - Insumos"
+          setup-command: "npm install --legacy-peer-deps"
+          command: "npm test"
+          timeout: 5
+          max-score: 6
