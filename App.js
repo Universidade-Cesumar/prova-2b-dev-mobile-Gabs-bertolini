@@ -42,8 +42,13 @@ export default function App() {
 
   const handleCadastrar = async () => {
     const quantidadeNumero = parseInt(quantidade, 10);
-    if (!nome.trim() || Number.isNaN(quantidadeNumero) || quantidadeNumero <= 0) {
-      Alert.alert('Atenção', 'Informe nome e quantidade válidos.');
+    if (!nome.trim()) {
+      Alert.alert('Atenção', 'Informe o nome do material.');
+      return;
+    }
+
+    if (Number.isNaN(quantidadeNumero) || quantidadeNumero <= 0) {
+      Alert.alert('Atenção', 'A quantidade deve ser um número maior que zero.');
       return;
     }
 
@@ -58,6 +63,7 @@ export default function App() {
       });
       setNome('');
       setQuantidade('');
+      Keyboard.dismiss();
       fetchMateriais();
     } catch (error) {
       Alert.alert('Erro', 'Falha ao cadastrar material.');
