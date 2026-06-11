@@ -36,6 +36,9 @@ export default function App() {
         keyboardType="numeric"
         testID="input-quantidade"
       />
+      <TouchableOpacity style={styles.button} testID="btn-cadastrar">
+        <Text style={styles.buttonText}>Cadastrar</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -62,11 +65,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     marginBottom: 12,
   },
-  description: {
-    fontSize: 14,
-    color: '#666',
-    textAlign: 'center',
-    lineHeight: 20,
-    marginBottom: 30,
+  button: {
+    height: 50,
+    borderRadius: 8,
+    backgroundColor: '#2563eb',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  buttonText: {
+    color: '#fff',
+    fontWeight: '600',
+    fontSize: 16,
   },
 });
