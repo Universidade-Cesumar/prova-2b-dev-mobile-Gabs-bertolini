@@ -16,18 +16,23 @@ export default function App() {
   const [nome, setNome] = useState('');
   const [quantidade, setQuantidade] = useState('');
   const [materiais, setMateriais] = useState([]);
+  const [carregando, setCarregando] = useState(false);
+  const [salvando, setSalvando] = useState(false);
 
   useEffect(() => {
     fetchMateriais();
   }, []);
 
   const fetchMateriais = async () => {
+    setCarregando(true);
     try {
       const response = await fetch(`${API_BASE_URL}/materiais`);
       const data = await response.json();
       setMateriais(data);
     } catch (error) {
       Alert.alert('Erro', 'Não foi possível carregar os materiais.');
+    } finally {
+      setCarregando(false);
     }
   };
 
@@ -42,6 +47,7 @@ export default function App() {
       return;
     }
 
+    setSalvando(true);
     try {
       await fetch(`${API_BASE_URL}/materiais`, {
         method: 'POST',
@@ -55,6 +61,8 @@ export default function App() {
       fetchMateriais();
     } catch (error) {
       Alert.alert('Erro', 'Falha ao cadastrar material.');
+    } finally {
+      setSalvando(false);
     }
   };
 
@@ -83,17 +91,21 @@ export default function App() {
         keyboardType="numeric"
         testID="input-quantidade"
       />
-      <TouchableOpacity style={styles.button} onPress={handleCadastrar} testID="btn-cadastrar">
-        <Text style={styles.buttonText}>Cadastrar</Text>
+      <TouchableOpacity style={styles.button} onPress={handleCadastrar} disabled={salvando} testID="btn-cadastrar">
+        <Text style={styles.buttonText}>{salvando ? 'Cadastrando...' : 'Cadastrar'}</Text>
       </TouchableOpacity>
-      <FlatList
-        style={styles.list}
-        testID="lista-materiais"
-        data={materiais}
-        keyExtractor={(item) => item.id?.toString() || String(item.nome)}
-        renderItem={renderItem}
-        ListEmptyComponent={<Text style={styles.emptyText}>Nenhum material cadastrado no momento.</Text>}
-      />
+      {carregando ? (
+        <ActivityIndicator style={styles.loading} size="large" color="#007AFF" />
+      ) : (
+        <FlatList
+          style={styles.list}
+          testID="lista-materiais"
+          data={materiais}
+          keyExtractor={(item) => item.id?.toString() || String(item.nome)}
+          renderItem={renderItem}
+          ListEmptyComponent={<Text style={styles.emptyText}>Nenhum material cadastrado no momento.</Text>}
+        />
+      )}
     </View>
   );
 }
@@ -132,6 +144,9 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: '600',
     fontSize: 16,
+  },
+  loading: {
+    marginTop: 20,
   },
   list: {
     flex: 1,
