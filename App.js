@@ -88,6 +88,7 @@ export default function App() {
         value={nome}
         onChangeText={setNome}
         testID="input-nome"
+        autoCapitalize="sentences"
       />
       <TextInput
         style={styles.input}
@@ -97,7 +98,7 @@ export default function App() {
         keyboardType="numeric"
         testID="input-quantidade"
       />
-      <TouchableOpacity style={styles.button} onPress={handleCadastrar} disabled={salvando} testID="btn-cadastrar">
+      <TouchableOpacity style={[styles.button, salvando && styles.buttonDisabled]} onPress={handleCadastrar} disabled={salvando} testID="btn-cadastrar">
         <Text style={styles.buttonText}>{salvando ? 'Cadastrando...' : 'Cadastrar'}</Text>
       </TouchableOpacity>
       {carregando ? (
@@ -109,6 +110,7 @@ export default function App() {
           data={materiais}
           keyExtractor={(item) => item.id?.toString() || String(item.nome)}
           renderItem={renderItem}
+          contentContainerStyle={styles.listContent}
           ListEmptyComponent={<Text style={styles.emptyText}>Nenhum material cadastrado no momento.</Text>}
         />
       )}
@@ -119,37 +121,43 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f8fafc',
     paddingTop: 50,
     paddingHorizontal: 20,
   },
   title: {
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 10,
-    color: '#333',
+    marginBottom: 20,
+    color: '#1f2937',
   },
   input: {
     height: 50,
-    borderColor: '#ccc',
+    borderColor: '#cbd5e1',
     borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 12,
+    borderRadius: 10,
+    paddingHorizontal: 15,
     marginBottom: 12,
+    backgroundColor: '#ffffff',
+    fontSize: 16,
+    color: '#111827',
   },
   button: {
     height: 50,
-    borderRadius: 8,
+    borderRadius: 10,
     backgroundColor: '#2563eb',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20,
   },
+  buttonDisabled: {
+    opacity: 0.6,
+  },
   buttonText: {
-    color: '#fff',
-    fontWeight: '600',
+    color: '#ffffff',
     fontSize: 16,
+    fontWeight: '600',
   },
   loading: {
     marginTop: 20,
@@ -157,26 +165,33 @@ const styles = StyleSheet.create({
   list: {
     flex: 1,
   },
+  listContent: {
+    paddingBottom: 32,
+  },
   itemContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 16,
     marginBottom: 10,
-    borderRadius: 8,
-    borderColor: '#e2e8f0',
+    borderRadius: 12,
+    backgroundColor: '#ffffff',
     borderWidth: 1,
-    backgroundColor: '#fff',
+    borderColor: '#e2e8f0',
   },
   itemText: {
     fontSize: 16,
+    color: '#111827',
+    flexShrink: 1,
   },
   itemQuantity: {
     fontSize: 16,
     fontWeight: '700',
+    color: '#0f172a',
   },
   emptyText: {
     textAlign: 'center',
+    color: '#475569',
     marginTop: 20,
-    color: '#666',
+    fontSize: 16,
   },
 });
