@@ -18,6 +18,13 @@ export default function App() {
     setQuantidade(value.replace(/[^0-9]/g, ''));
   };
 
+  const renderItem = ({ item }) => (
+    <View style={styles.itemContainer}>
+      <Text style={styles.itemText}>{item.nome}</Text>
+      <Text style={styles.itemQuantity}>{item.quantidade}</Text>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Almoxarifado - Enfermagem</Text>
@@ -39,6 +46,14 @@ export default function App() {
       <TouchableOpacity style={styles.button} testID="btn-cadastrar">
         <Text style={styles.buttonText}>Cadastrar</Text>
       </TouchableOpacity>
+      <FlatList
+        style={styles.list}
+        testID="lista-materiais"
+        data={materiais}
+        keyExtractor={(item) => item.id?.toString() || String(item.nome)}
+        renderItem={renderItem}
+        ListEmptyComponent={<Text style={styles.emptyText}>Nenhum material cadastrado no momento.</Text>}
+      />
     </View>
   );
 }
@@ -77,5 +92,30 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: '600',
     fontSize: 16,
+  },
+  list: {
+    flex: 1,
+  },
+  itemContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 16,
+    marginBottom: 10,
+    borderRadius: 8,
+    borderColor: '#e2e8f0',
+    borderWidth: 1,
+    backgroundColor: '#fff',
+  },
+  itemText: {
+    fontSize: 16,
+  },
+  itemQuantity: {
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  emptyText: {
+    textAlign: 'center',
+    marginTop: 20,
+    color: '#666',
   },
 });
