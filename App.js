@@ -14,6 +14,14 @@ export default function App() {
   const [quantidade, setQuantidade] = useState('');
   const [materiais, setMateriais] = useState([]);
 
+  useEffect(() => {
+    fetchMateriais();
+  }, []);
+
+  const fetchMateriais = async () => {
+    setMateriais([]);
+  };
+
   const handleQuantidadeChange = (value) => {
     setQuantidade(value.replace(/[^0-9]/g, ''));
   };
