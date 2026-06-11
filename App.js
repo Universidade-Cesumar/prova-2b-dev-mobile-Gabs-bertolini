@@ -7,7 +7,9 @@ import {
   TouchableOpacity,
   FlatList,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
+import { API_BASE_URL } from './constants/api';
 
 export default function App() {
   const [nome, setNome] = useState('');
@@ -19,7 +21,13 @@ export default function App() {
   }, []);
 
   const fetchMateriais = async () => {
-    setMateriais([]);
+    try {
+      const response = await fetch(`${API_BASE_URL}/materiais`);
+      const data = await response.json();
+      setMateriais(data);
+    } catch (error) {
+      Alert.alert('Erro', 'Não foi possível carregar os materiais.');
+    }
   };
 
   const handleQuantidadeChange = (value) => {
