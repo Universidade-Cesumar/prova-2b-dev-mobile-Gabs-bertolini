@@ -10,6 +10,10 @@ import {
 } from 'react-native';
 
 export default function App() {
+  const [nome, setNome] = useState('');
+  const [quantidade, setQuantidade] = useState('');
+  const [materiais, setMateriais] = useState([]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Almoxarifado - Enfermagem</Text>
