@@ -8,6 +8,7 @@ import {
   FlatList,
   ActivityIndicator,
   Alert,
+  Keyboard,
 } from 'react-native';
 import { API_BASE_URL } from './constants/api';
 
@@ -32,6 +33,29 @@ export default function App() {
 
   const handleQuantidadeChange = (value) => {
     setQuantidade(value.replace(/[^0-9]/g, ''));
+  };
+
+  const handleCadastrar = async () => {
+    const quantidadeNumero = parseInt(quantidade, 10);
+    if (!nome.trim() || Number.isNaN(quantidadeNumero) || quantidadeNumero <= 0) {
+      Alert.alert('Atenção', 'Informe nome e quantidade válidos.');
+      return;
+    }
+
+    try {
+      await fetch(`${API_BASE_URL}/materiais`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ nome: nome.trim(), quantidade: quantidadeNumero }),
+      });
+      setNome('');
+      setQuantidade('');
+      fetchMateriais();
+    } catch (error) {
+      Alert.alert('Erro', 'Falha ao cadastrar material.');
+    }
   };
 
   const renderItem = ({ item }) => (
@@ -59,7 +83,7 @@ export default function App() {
         keyboardType="numeric"
         testID="input-quantidade"
       />
-      <TouchableOpacity style={styles.button} testID="btn-cadastrar">
+      <TouchableOpacity style={styles.button} onPress={handleCadastrar} testID="btn-cadastrar">
         <Text style={styles.buttonText}>Cadastrar</Text>
       </TouchableOpacity>
       <FlatList
