@@ -1,11 +1,119 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+  FlatList,
+  ActivityIndicator,
+  Alert,
+  Keyboard,
+} from 'react-native';
+import { API_BASE_URL } from './constants/api';
 
 export default function App() {
+  const [nome, setNome] = useState('');
+  const [quantidade, setQuantidade] = useState('');
+  const [materiais, setMateriais] = useState([]);
+  const [carregando, setCarregando] = useState(false);
+  const [salvando, setSalvando] = useState(false);
+
+  useEffect(() => {
+    fetchMateriais();
+  }, []);
+
+  const fetchMateriais = async () => {
+    setCarregando(true);
+    try {
+      const response = await fetch(`${API_BASE_URL}/materiais`);
+      const data = await response.json();
+      setMateriais(data);
+    } catch (error) {
+      Alert.alert('Erro', 'Não foi possível carregar os materiais.');
+    } finally {
+      setCarregando(false);
+    }
+  };
+
+  const handleQuantidadeChange = (value) => {
+    setQuantidade(value.replace(/[^0-9]/g, ''));
+  };
+
+  const handleCadastrar = async () => {
+    const quantidadeNumero = parseInt(quantidade, 10);
+    if (!nome.trim()) {
+      Alert.alert('Atenção', 'Informe o nome do material.');
+      return;
+    }
+
+    if (Number.isNaN(quantidadeNumero) || quantidadeNumero <= 0) {
+      Alert.alert('Atenção', 'A quantidade deve ser um número maior que zero.');
+      return;
+    }
+
+    setSalvando(true);
+    try {
+      await fetch(`${API_BASE_URL}/materiais`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ nome: nome.trim(), quantidade: quantidadeNumero }),
+      });
+      setNome('');
+      setQuantidade('');
+      Keyboard.dismiss();
+      fetchMateriais();
+    } catch (error) {
+      Alert.alert('Erro', 'Falha ao cadastrar material.');
+    } finally {
+      setSalvando(false);
+    }
+  };
+
+  const renderItem = ({ item }) => (
+    <View style={styles.itemContainer}>
+      <Text style={styles.itemText}>{item.nome}</Text>
+      <Text style={styles.itemQuantity}>{item.quantidade}</Text>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <Text style={styles.title}>Almoxarifado - Enfermagem</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Nome do material"
+        value={nome}
+        onChangeText={setNome}
+        testID="input-nome"
+        autoCapitalize="sentences"
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Quantidade"
+        value={quantidade}
+        onChangeText={handleQuantidadeChange}
+        keyboardType="numeric"
+        testID="input-quantidade"
+      />
+      <TouchableOpacity style={[styles.button, salvando && styles.buttonDisabled]} onPress={handleCadastrar} disabled={salvando} testID="btn-cadastrar">
+        <Text style={styles.buttonText}>{salvando ? 'Cadastrando...' : 'Cadastrar'}</Text>
+      </TouchableOpacity>
+      {carregando ? (
+        <ActivityIndicator style={styles.loading} size="large" color="#007AFF" />
+      ) : (
+        <FlatList
+          style={styles.list}
+          testID="lista-materials"
+          data={materiais}
+          keyExtractor={(item) => item.id?.toString() || String(item.nome)}
+          renderItem={renderItem}
+          contentContainerStyle={styles.listContent}
+          ListEmptyComponent={<Text style={styles.emptyText}>Nenhum material cadastrado no momento.</Text>}
+        />
+      )}
     </View>
   );
 }
@@ -13,8 +121,77 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
+    backgroundColor: '#f8fafc',
+    paddingTop: 50,
+    paddingHorizontal: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 20,
+    color: '#1f2937',
+  },
+  input: {
+    height: 50,
+    borderColor: '#cbd5e1',
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    marginBottom: 12,
+    backgroundColor: '#ffffff',
+    fontSize: 16,
+    color: '#111827',
+  },
+  button: {
+    height: 50,
+    borderRadius: 10,
+    backgroundColor: '#2563eb',
     justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  buttonDisabled: {
+    opacity: 0.6,
+  },
+  buttonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  loading: {
+    marginTop: 20,
+  },
+  list: {
+    flex: 1,
+  },
+  listContent: {
+    paddingBottom: 32,
+  },
+  itemContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 16,
+    marginBottom: 10,
+    borderRadius: 12,
+    backgroundColor: '#ffffff',
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+  },
+  itemText: {
+    fontSize: 16,
+    color: '#111827',
+    flexShrink: 1,
+  },
+  itemQuantity: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#0f172a',
+  },
+  emptyText: {
+    textAlign: 'center',
+    color: '#475569',
+    marginTop: 20,
+    fontSize: 16,
   },
 });

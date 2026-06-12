@@ -18,6 +18,7 @@ export default function App() {
   const [materiais, setMateriais] = useState([]);
   const [carregando, setCarregando] = useState(false);
   const [salvando, setSalvando] = useState(false);
+  const [busca, setBusca] = useState('');
 
   useEffect(() => {
     fetchMateriais();
@@ -46,7 +47,6 @@ export default function App() {
       Alert.alert('Atenção', 'Informe o nome do material.');
       return;
     }
-
     if (Number.isNaN(quantidadeNumero) || quantidadeNumero <= 0) {
       Alert.alert('Atenção', 'A quantidade deve ser um número maior que zero.');
       return;
@@ -56,9 +56,7 @@ export default function App() {
     try {
       await fetch(`${API_BASE_URL}/materiais`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ nome: nome.trim(), quantidade: quantidadeNumero }),
       });
       setNome('');
@@ -72,6 +70,10 @@ export default function App() {
     }
   };
 
+  const materiaisFiltrados = materiais.filter((item) =>
+    item.nome?.toLowerCase().includes(busca.toLowerCase())
+  );
+
   const renderItem = ({ item }) => (
     <View style={styles.itemContainer}>
       <Text style={styles.itemText}>{item.nome}</Text>
@@ -82,6 +84,8 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Almoxarifado - Enfermagem</Text>
+
+      {/* Formulário de cadastro */}
       <TextInput
         style={styles.input}
         placeholder="Nome do material"
@@ -98,22 +102,46 @@ export default function App() {
         keyboardType="numeric"
         testID="input-quantidade"
       />
-      <TouchableOpacity style={[styles.button, salvando && styles.buttonDisabled]} onPress={handleCadastrar} disabled={salvando} testID="btn-cadastrar">
+      <TouchableOpacity
+        style={[styles.button, salvando && styles.buttonDisabled]}
+        onPress={handleCadastrar}
+        disabled={salvando}
+        testID="btn-cadastrar"
+      >
         <Text style={styles.buttonText}>{salvando ? 'Cadastrando...' : 'Cadastrar'}</Text>
       </TouchableOpacity>
-      {carregando ? (
+
+      {/* Campo de busca */}
+      <TextInput
+        style={styles.input}
+        placeholder="Buscar material..."
+        value={busca}
+        onChangeText={setBusca}
+        testID="input-busca"
+      />
+
+      {/* Totalizador */}
+      <Text style={styles.totalText} testID="total-itens">
+        Total de itens: {materiais.length}
+      </Text>
+
+      {/* Indicador de carregamento */}
+      {carregando && (
         <ActivityIndicator style={styles.loading} size="large" color="#007AFF" />
-      ) : (
-        <FlatList
-          style={styles.list}
-          testID="lista-materiais"
-          data={materiais}
-          keyExtractor={(item) => item.id?.toString() || String(item.nome)}
-          renderItem={renderItem}
-          contentContainerStyle={styles.listContent}
-          ListEmptyComponent={<Text style={styles.emptyText}>Nenhum material cadastrado no momento.</Text>}
-        />
       )}
+
+      {/* Lista de materiais — sempre renderizada */}
+      <FlatList
+        style={styles.list}
+        testID="lista-materials"
+        data={materiaisFiltrados}
+        keyExtractor={(item) => item.id?.toString() || String(item.nome)}
+        renderItem={renderItem}
+        contentContainerStyle={styles.listContent}
+        ListEmptyComponent={
+          <Text style={styles.emptyText}>Nenhum material cadastrado no momento.</Text>
+        }
+      />
     </View>
   );
 }
@@ -160,7 +188,14 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   loading: {
-    marginTop: 20,
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  totalText: {
+    fontSize: 14,
+    color: '#475569',
+    marginBottom: 10,
+    textAlign: 'right',
   },
   list: {
     flex: 1,
