@@ -113,6 +113,17 @@ export default function App() {
       }
     };
 
+    const handleExcluir = async () => {
+      try {
+        await fetch(`${API_BASE_URL}/materiais/${item.id}`, { method: 'DELETE' });
+        handleRemoverItem(item.id);
+        setRetirada('');
+        Keyboard.dismiss();
+      } catch (error) {
+        Alert.alert('Erro', 'Falha ao excluir material.');
+      }
+    };
+
     return (
       <View style={styles.itemContainer}>
         <View style={styles.itemInfo}>
@@ -136,14 +147,7 @@ export default function App() {
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.button, styles.itemButton, styles.deleteButton]}
-          onPress={async () => {
-            try {
-              await fetch(`${API_BASE_URL}/materiais/${item.id}`, { method: 'DELETE' });
-              handleRemoverItem(item.id);
-            } catch (error) {
-              Alert.alert('Erro', 'Falha ao excluir material.');
-            }
-          }}
+          onPress={handleExcluir}
           testID="btn-excluir"
         >
           <Text style={styles.buttonText}>Excluir</Text>
