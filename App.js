@@ -134,7 +134,18 @@ export default function App() {
         >
           <Text style={styles.buttonText}>Baixar</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.button, styles.itemButton, styles.deleteButton]} testID="btn-excluir">
+        <TouchableOpacity
+          style={[styles.button, styles.itemButton, styles.deleteButton]}
+          onPress={async () => {
+            try {
+              await fetch(`${API_BASE_URL}/materiais/${item.id}`, { method: 'DELETE' });
+              handleRemoverItem(item.id);
+            } catch (error) {
+              Alert.alert('Erro', 'Falha ao excluir material.');
+            }
+          }}
+          testID="btn-excluir"
+        >
           <Text style={styles.buttonText}>Excluir</Text>
         </TouchableOpacity>
       </View>
