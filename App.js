@@ -104,6 +104,9 @@ export default function App() {
           placeholder="Qtd"
           testID="input-retirada"
         />
+        <TouchableOpacity style={[styles.button, styles.itemButton]} testID="btn-baixar">
+          <Text style={styles.buttonText}>Baixar</Text>
+        </TouchableOpacity>
       </View>
     );
   };
