@@ -296,6 +296,22 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#0f172a',
   },
+  itemInfo: {
+    flex: 1,
+    marginRight: 12,
+  },
+  retiradaInput: {
+    width: 80,
+    height: 40,
+    marginBottom: 0,
+  },
+  itemButton: {
+    marginLeft: 8,
+    minWidth: 70,
+  },
+  deleteButton: {
+    backgroundColor: '#ef4444',
+  },
   emptyText: {
     textAlign: 'center',
     color: '#475569',
