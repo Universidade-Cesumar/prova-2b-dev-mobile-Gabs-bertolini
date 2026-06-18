@@ -87,14 +87,26 @@ export default function App() {
     item.nome?.toLowerCase().includes(busca.toLowerCase())
   );
 
-  const Item = ({ item }) => (
-    <View style={styles.itemContainer}>
-      <View style={styles.itemInfo}>
-        <Text style={styles.itemText}>{item.nome}</Text>
-        <Text style={styles.itemQuantity}>{item.quantidade}</Text>
+  const Item = ({ item }) => {
+    const [retirada, setRetirada] = useState('');
+
+    return (
+      <View style={styles.itemContainer}>
+        <View style={styles.itemInfo}>
+          <Text style={styles.itemText}>{item.nome}</Text>
+          <Text style={styles.itemQuantity}>{item.quantidade}</Text>
+        </View>
+        <TextInput
+          style={[styles.input, styles.retiradaInput]}
+          value={retirada}
+          onChangeText={(value) => setRetirada(value.replace(/[^0-9]/g, ''))}
+          keyboardType="numeric"
+          placeholder="Qtd"
+          testID="input-retirada"
+        />
       </View>
-    </View>
-  );
+    );
+  };
 
   const renderItem = ({ item }) => <Item item={item} />;
 
