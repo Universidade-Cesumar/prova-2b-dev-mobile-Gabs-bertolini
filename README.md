@@ -13,6 +13,8 @@ Este projeto é um aplicativo mobile simples em React Native com Expo para contr
 - Inclusão de material via POST em `/materiais`.
 - Limpeza automática dos campos após cadastro.
 - Validação de quantidade para aceitar apenas valores numéricos maiores que zero.
+- Retirada de estoque em cada item com `input-retirada` e `btn-baixar`.
+- Exclusão de material direto na lista com `btn-excluir`.
 
 ## Estrutura do Código
 
