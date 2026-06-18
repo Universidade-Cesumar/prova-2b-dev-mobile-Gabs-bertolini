@@ -71,6 +71,18 @@ export default function App() {
     }
   };
 
+  const handleAtualizarItem = (itemAtualizado) => {
+    setMateriais((prevMateriais) =>
+      prevMateriais.map((item) =>
+        item.id === itemAtualizado.id ? itemAtualizado : item
+      )
+    );
+  };
+
+  const handleRemoverItem = (id) => {
+    setMateriais((prevMateriais) => prevMateriais.filter((item) => item.id !== id));
+  };
+
   const materiaisFiltrados = materiais.filter((item) =>
     item.nome?.toLowerCase().includes(busca.toLowerCase())
   );
