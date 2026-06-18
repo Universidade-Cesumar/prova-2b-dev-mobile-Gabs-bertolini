@@ -38,8 +38,10 @@ export default function App() {
     }
   };
 
+  const sanitizeNumero = (value) => value.replace(/[^0-9]/g, '');
+
   const handleQuantidadeChange = (value) => {
-    setQuantidade(value.replace(/[^0-9]/g, ''));
+    setQuantidade(sanitizeNumero(value));
   };
 
   const handleCadastrar = async () => {
@@ -133,7 +135,7 @@ export default function App() {
         <TextInput
           style={[styles.input, styles.retiradaInput]}
           value={retirada}
-          onChangeText={(value) => setRetirada(value.replace(/[^0-9]/g, ''))}
+          onChangeText={(value) => setRetirada(sanitizeNumero(value))}
           keyboardType="numeric"
           placeholder="Qtd"
           testID="input-retirada"
