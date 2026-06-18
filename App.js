@@ -90,6 +90,29 @@ export default function App() {
   const Item = ({ item }) => {
     const [retirada, setRetirada] = useState('');
 
+    const handleBaixar = async () => {
+      const quantidadeRetirada = parseInt(retirada, 10);
+      if (!validacoes.validarRetirada(item.quantidade, quantidadeRetirada)) {
+        Alert.alert('Atenção', 'Retirada inválida — verifique a quantidade.');
+        return;
+      }
+
+      const novoSaldo = item.quantidade - quantidadeRetirada;
+      try {
+        const response = await fetch(`${API_BASE_URL}/materiais/${item.id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ...item, quantidade: novoSaldo }),
+        });
+        const data = await response.json();
+        handleAtualizarItem(data);
+        setRetirada('');
+        Keyboard.dismiss();
+      } catch (error) {
+        Alert.alert('Erro', 'Falha ao baixar material.');
+      }
+    };
+
     return (
       <View style={styles.itemContainer}>
         <View style={styles.itemInfo}>
@@ -104,7 +127,11 @@ export default function App() {
           placeholder="Qtd"
           testID="input-retirada"
         />
-        <TouchableOpacity style={[styles.button, styles.itemButton]} testID="btn-baixar">
+        <TouchableOpacity
+          style={[styles.button, styles.itemButton]}
+          onPress={handleBaixar}
+          testID="btn-baixar"
+        >
           <Text style={styles.buttonText}>Baixar</Text>
         </TouchableOpacity>
         <TouchableOpacity style={[styles.button, styles.itemButton, styles.deleteButton]} testID="btn-excluir">
