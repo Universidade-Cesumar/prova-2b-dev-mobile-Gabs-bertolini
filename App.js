@@ -87,12 +87,16 @@ export default function App() {
     item.nome?.toLowerCase().includes(busca.toLowerCase())
   );
 
-  const renderItem = ({ item }) => (
+  const Item = ({ item }) => (
     <View style={styles.itemContainer}>
-      <Text style={styles.itemText}>{item.nome}</Text>
-      <Text style={styles.itemQuantity}>{item.quantidade}</Text>
+      <View style={styles.itemInfo}>
+        <Text style={styles.itemText}>{item.nome}</Text>
+        <Text style={styles.itemQuantity}>{item.quantidade}</Text>
+      </View>
     </View>
   );
+
+  const renderItem = ({ item }) => <Item item={item} />;
 
   return (
     <View style={styles.container}>
