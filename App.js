@@ -92,7 +92,7 @@ export default function App() {
 
     const handleBaixar = async () => {
       const quantidadeRetirada = parseInt(retirada, 10);
-      if (!validacoes.validarRetirada(item.quantidade, quantidadeRetirada)) {
+      if (Number.isNaN(quantidadeRetirada) || !validacoes.validarRetirada(item.quantidade, quantidadeRetirada)) {
         Alert.alert('Atenção', 'Retirada inválida — verifique a quantidade.');
         return;
       }
