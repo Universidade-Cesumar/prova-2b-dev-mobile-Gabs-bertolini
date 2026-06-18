@@ -11,6 +11,7 @@ import {
   Keyboard,
 } from 'react-native';
 import { API_BASE_URL } from './constants/api';
+const validacoes = require('./src/utils/validacoes');
 
 export default function App() {
   const [nome, setNome] = useState('');
