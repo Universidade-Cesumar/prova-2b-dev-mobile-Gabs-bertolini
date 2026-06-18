@@ -107,6 +107,9 @@ export default function App() {
         <TouchableOpacity style={[styles.button, styles.itemButton]} testID="btn-baixar">
           <Text style={styles.buttonText}>Baixar</Text>
         </TouchableOpacity>
+        <TouchableOpacity style={[styles.button, styles.itemButton, styles.deleteButton]} testID="btn-excluir">
+          <Text style={styles.buttonText}>Excluir</Text>
+        </TouchableOpacity>
       </View>
     );
   };
