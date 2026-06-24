@@ -232,7 +232,7 @@ export default function App() {
         style={styles.list}
         testID="lista-materials"
         data={materiaisFiltrados}
-        keyExtractor={(item) => item.id?.toString() || String(item.nome)}
+        keyExtractor={(item, index) => item.id?.toString() || item.nome || `item-${index}`}
         renderItem={renderItem}
         contentContainerStyle={styles.listContent}
         ListEmptyComponent={
