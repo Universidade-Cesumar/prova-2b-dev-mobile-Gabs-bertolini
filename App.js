@@ -194,6 +194,7 @@ export default function App() {
         onChangeText={handleQuantidadeChange}
         keyboardType="numeric"
         testID="input-quantidade"
+        onSubmitEditing={handleCadastrar}
       />
       <TouchableOpacity
         style={[styles.button, salvando && styles.buttonDisabled]}
