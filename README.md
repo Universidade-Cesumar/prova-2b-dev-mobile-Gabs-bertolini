@@ -15,6 +15,9 @@ Este projeto é um aplicativo mobile simples em React Native com Expo para contr
 - Validação de quantidade para aceitar apenas valores numéricos maiores que zero.
 - Retirada de estoque em cada item com `input-retirada` e `btn-baixar`.
 - Exclusão de material direto na lista com `btn-excluir`.
+- Implementação de baixa de estoque com validação de regra de negócio para impedir estoque negativo.
+- Atualização de estoque em tempo real via requisição PUT/PATCH na MockAPI após retirada.
+- Garantia de consistência de estado entre interface e backend após operações de baixa e exclusão.
 
 ## Estrutura do Código
 
