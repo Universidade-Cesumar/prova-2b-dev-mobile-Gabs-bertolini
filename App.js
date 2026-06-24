@@ -116,7 +116,7 @@ export default function App() {
         setRetirada('');
         Keyboard.dismiss();
       } catch (error) {
-        Alert.alert('Erro', 'Falha ao baixar material.');
+        Alert.alert('Erro de conexão', 'Não foi possível atualizar o material. Verifique sua conexão e tente novamente.');
       }
     };
 
