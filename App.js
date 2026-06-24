@@ -127,7 +127,7 @@ export default function App() {
         setRetirada('');
         Keyboard.dismiss();
       } catch (error) {
-        Alert.alert('Erro', 'Falha ao excluir material.');
+        Alert.alert('Erro de conexão', 'Não foi possível excluir o material. Verifique sua conexão e tente novamente.');
       }
     };
 
