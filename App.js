@@ -132,7 +132,10 @@ export default function App() {
     };
 
     return (
-      <View style={styles.itemContainer}>
+      <View
+        style={[styles.itemContainer, itemIsLowStock && styles.criticalContainer]}
+        accessibilityLabel={itemIsLowStock ? 'estoque-critico' : undefined}
+      >
         <View style={styles.itemInfo}>
           <Text style={styles.itemText}>{item.nome}</Text>
           <Text style={styles.itemQuantity}>{item.quantidade}</Text>
