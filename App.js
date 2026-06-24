@@ -208,9 +208,12 @@ export default function App() {
       {/* Campo de busca */}
       <TextInput
         style={styles.input}
-        placeholder="Buscar material..."
+        placeholder="Buscar material por nome..."
         value={busca}
         onChangeText={setBusca}
+        autoCapitalize="none"
+        autoCorrect={false}
+        accessibilityHint="Digite parte do nome para filtrar a lista em memória"
         testID="input-busca"
       />
 
