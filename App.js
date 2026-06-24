@@ -95,6 +95,7 @@ export default function App() {
 
   const Item = ({ item }) => {
     const [retirada, setRetirada] = useState('');
+    const itemIsLowStock = isLowStock(item.quantidade);
 
     const handleBaixar = async () => {
       const quantidadeRetirada = parseInt(retirada, 10);
