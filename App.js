@@ -87,8 +87,10 @@ export default function App() {
     setMateriais((prevMateriais) => prevMateriais.filter((item) => item.id !== id));
   };
 
+  const buscaNormalizada = busca.toLowerCase();
+
   const materiaisFiltrados = materiais.filter((item) =>
-    item.nome?.toLowerCase().includes(busca.toLowerCase())
+    item.nome?.toLowerCase().includes(buscaNormalizada)
   );
 
   const Item = ({ item }) => {
