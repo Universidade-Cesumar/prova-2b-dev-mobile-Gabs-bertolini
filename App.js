@@ -32,7 +32,7 @@ export default function App() {
       const data = await response.json();
       setMateriais(data);
     } catch (error) {
-      Alert.alert('Erro', 'Não foi possível carregar os materiais.');
+      Alert.alert('Erro de conexão', 'Não foi possível carregar os materiais. Verifique sua conexão e tente novamente.');
     } finally {
       setCarregando(false);
     }
