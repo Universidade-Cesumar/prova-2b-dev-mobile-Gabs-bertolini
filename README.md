@@ -53,12 +53,5 @@ Este projeto é um aplicativo mobile simples em React Native com Expo para contr
 > Dica: use a câmera do celular ou o scanner integrado do Expo Go para abrir o projeto rapidamente.
 
 ## Screenshots
+<img width="776" height="917" alt="2026-06-24_16-51-47" src="https://github.com/user-attachments/assets/3a94adba-6b41-4c3e-8a7b-43ae3db189df" />
 
-Insira aqui capturas de tela do app em funcionamento. Exemplo:
-
-- Tela principal exibindo a lista de materiais
-- Fluxo de cadastro de novo material
-- Indicador de estoque crítico destacado
-
-![Screenshot 1](./assets/screenshot1.png)
-![Screenshot 2](./assets/screenshot2.png)
