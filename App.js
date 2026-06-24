@@ -293,6 +293,7 @@ const styles = StyleSheet.create({
     color: '#475569',
     marginBottom: 10,
     textAlign: 'right',
+    fontWeight: '600',
   },
   list: {
     flex: 1,
@@ -310,8 +311,33 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#e2e8f0',
   },
+  criticalContainer: {
+    backgroundColor: '#fee2e2',
+    borderColor: '#fca5a5',
+  },
+  alertBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: 8,
+    marginTop: 8,
+    alignSelf: 'flex-start',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 8,
+    backgroundColor: '#fef2f2',
+  },
+  alertIcon: {
+    fontSize: 16,
+    marginRight: 6,
+  },
+  alertText: {
+    color: '#991b1b',
+    fontSize: 12,
+    fontWeight: '700',
+  },
   itemText: {
     fontSize: 16,
+    fontWeight: '700',
     color: '#111827',
     flexShrink: 1,
   },
