@@ -32,3 +32,33 @@ Este projeto é um aplicativo mobile simples em React Native com Expo para contr
    npm start
    ```
 3. Abra o app no Android, iOS ou Web pelo Expo DevTools.
+
+## Clonar e executar com Expo Go
+
+1. Clone o repositório:
+   ```bash
+   git clone <URL_DO_REPOSITORIO>
+   cd prova-2b-dev-mobile-Gabs-bertolini
+   ```
+2. Instale dependências:
+   ```bash
+   npm install
+   ```
+3. Inicie o servidor do Expo:
+   ```bash
+   npx expo start
+   ```
+4. Abra o projeto no seu celular usando o aplicativo Expo Go (leia o QR code exibido no terminal/Expo DevTools).
+
+> Dica: use a câmera do celular ou o scanner integrado do Expo Go para abrir o projeto rapidamente.
+
+## Screenshots
+
+Insira aqui capturas de tela do app em funcionamento. Exemplo:
+
+- Tela principal exibindo a lista de materiais
+- Fluxo de cadastro de novo material
+- Indicador de estoque crítico destacado
+
+![Screenshot 1](./assets/screenshot1.png)
+![Screenshot 2](./assets/screenshot2.png)
