@@ -40,6 +40,8 @@ export default function App() {
 
   const sanitizeNumero = (value) => value.replace(/[^0-9]/g, '');
 
+  const isLowStock = (quantidade) => Number(quantidade) < 10;
+
   const handleQuantidadeChange = (value) => {
     setQuantidade(sanitizeNumero(value));
   };
