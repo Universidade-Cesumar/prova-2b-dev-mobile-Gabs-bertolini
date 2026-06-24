@@ -67,7 +67,7 @@ export default function App() {
       setNome('');
       setQuantidade('');
       Keyboard.dismiss();
-      fetchMateriais();
+      await fetchMateriais();
     } catch (error) {
       Alert.alert('Erro', 'Falha ao cadastrar material.');
     } finally {
