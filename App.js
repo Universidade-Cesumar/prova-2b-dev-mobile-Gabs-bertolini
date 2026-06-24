@@ -219,7 +219,7 @@ export default function App() {
 
       {/* Totalizador */}
       <Text style={styles.totalText} testID="total-itens">
-        Total de itens: {materiais.length}
+        Total de itens visíveis: {materiaisFiltrados.length}
       </Text>
 
       {/* Indicador de carregamento */}
