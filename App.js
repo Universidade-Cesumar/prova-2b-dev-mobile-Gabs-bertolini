@@ -137,9 +137,15 @@ export default function App() {
         accessibilityLabel={itemIsLowStock ? 'estoque-critico' : undefined}
       >
         <View style={styles.itemInfo}>
-          <Text style={styles.itemText}>{item.nome}</Text>
-          <Text style={styles.itemQuantity}>{item.quantidade}</Text>
+          <Text style={styles.itemText}>Produto: {item.nome}</Text>
+          <Text style={styles.itemQuantity}>Quantidade: {item.quantidade}</Text>
         </View>
+        {itemIsLowStock && (
+          <View style={styles.alertBox}>
+            <Text style={styles.alertIcon}>⚠️</Text>
+            <Text style={styles.alertText}>alerta: estoque baixo!</Text>
+          </View>
+        )}
         <TextInput
           style={[styles.input, styles.retiradaInput]}
           value={retirada}
