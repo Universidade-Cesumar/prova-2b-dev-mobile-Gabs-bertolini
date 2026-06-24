@@ -69,7 +69,7 @@ export default function App() {
       Keyboard.dismiss();
       await fetchMateriais();
     } catch (error) {
-      Alert.alert('Erro', 'Falha ao cadastrar material.');
+      Alert.alert('Erro de conexão', 'Não foi possível cadastrar o material. Verifique sua conexão e tente novamente.');
     } finally {
       setSalvando(false);
     }
